@@ -1,0 +1,35 @@
+This file contains message digests of all files listed in MANIFEST,
+signed via the Module::Signature module, version 0.55.
+
+To verify the content in this distribution, first make sure you have
+Module::Signature installed, then type:
+
+    % cpansign -v
+
+It will check each file's integrity, as well as the signature's
+validity.  If "==> Signature verified OK! <==" is not displayed,
+the distribution may already have been compromised, and you should
+not run its Makefile.PL or Build.PL.
+
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+SHA1 27ad8ee31910e74af661ee161446bd5c78efbea6 Build.PL
+SHA1 1e2e30a91de872dd349369f83f20bbe3df515265 Changes
+SHA1 a803a9315a572ee5d4642a45d4deb3a98b90cfd9 MANIFEST
+SHA1 25ce5bf9dd50f68665a22a6329dd7b8558a5b34d META.yml
+SHA1 bcef8fddccc8fcd738e329091ac3540f1d0c5449 bin/remind-notify
+SHA1 7dd9d274650e4a03a47fba634125644bb8a2bcde lib/Remind/Client.pm
+SHA1 48f2a5cec1b2401483de6d576ab5170beac5574a lib/Remind/Client/libnotify.pm
+SHA1 dce22cd381c7467bc3cbd55a7bacaef13bd4c3c5 t/000_remind_works.t
+SHA1 7efc9c512bcd036c9fb76ff988f952b81b15d79f t/000_reminders
+SHA1 328699b5315e65bd8eaec8ab562b47baaa2f230d t/001_remind_server.t
+SHA1 de1b8a6f043bb49463103b0fc02a65276f790a68 t/pod-coverage.t
+SHA1 e9c6a5881fc60173fbc8d479c1afd2ce3b43bef1 t/pod.t
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.13 (GNU/Linux)
+
+iEYEARECAAYFAkrNdwsACgkQokMzJ47YCzpG1gCeJV+Z0PMBp1Gffel4KpQmMcF9
+O+0AnAx61orc7vg7q4Vo/8Bg+ZCp7qTm
+=OPMp
+-----END PGP SIGNATURE-----
