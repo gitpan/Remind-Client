@@ -1,6 +1,6 @@
 ---
 name: Remind-Client
-version: 0.01
+version: 0.02
 author:
   - 'Mike Kelly <pioto@pioto.org>'
 abstract: class for working with remind's daemon mode
@@ -26,10 +26,10 @@ configure_requires:
 provides:
   Remind::Client:
     file: lib/Remind/Client.pm
-    version: 0.01
+    version: 0.02
   Remind::Client::libnotify:
     file: lib/Remind/Client/libnotify.pm
-    version: 0.01
+    version: 0.02
 generated_by: Module::Build version 0.340201
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html

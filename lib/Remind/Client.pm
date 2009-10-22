@@ -32,7 +32,7 @@ remind. It
 
 =cut
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 $VERSION = eval $VERSION;
 
 use Carp;
@@ -314,6 +314,10 @@ This doesn't provide any useful support for non-timed reminders (yet).
 =head1 SEE ALSO
 
 L<tkremind/"SERVER MODE">(1), L<remind>(1)
+
+L<Remind::Parser> for a tool to parse the calendar output.
+
+Remind's Homepage: L<http://www.roaringpenguin.com/products/remind>
 
 =head1 AUTHOR
 

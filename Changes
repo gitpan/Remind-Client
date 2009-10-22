@@ -1,17 +1,9 @@
-commit e6d74e06ef487fff474c5f194d44c44d791c923c
-Author: Mike Kelly <pioto@pioto.org>
-Date:   Thu Oct 8 01:09:35 2009 -0400
+Changes for Remind::Client
 
-    Initial public version of Remind::Client.
+0.02  Wed Oct 21 23:39:30 EDT 2009
+    - Better support for old versions of remind.
+    - Improved documentation.
 
- 10 files changed, 771 insertions(+), 0 deletions(-)
+0.01  Thu Oct  8 01:09:35 EDT 2009
+    - Initial public release.
 
-commit 61bc1ce68c0183c73fcfa2c2e0c467fac6597762
-Author: Mike Kelly <pioto@pioto.org>
-Date:   Tue Oct 6 09:54:03 2009 -0400
-
-    Add .gitignore
-
- 1 files changed, 10 insertions(+), 0 deletions(-)
-
-# vim: set ft=git :

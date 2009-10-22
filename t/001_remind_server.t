@@ -64,22 +64,30 @@ use Test::NoWarnings;
 }
 
 use File::Temp;
-use POSIX qw(strftime);
+use POSIX qw(strftime locale_h);
 
 my $TEST_REMINDERS = File::Temp->new(TEMPLATE => 'reminders-XXXXXX');
 # fire off a reminder in about one minute
 note "Writing temporary reminder config: $TEST_REMINDERS";
-$TEST_REMINDERS->printflush(strftime("REM %Y-%m-%d AT %H:%M MSG %%\"It's Time%%\" %%1%%\n", localtime(time+60)));
+
+# Older versions of remind don't support ISO 8601-style dates
+# (%Y-%m-%d), so we have to do this:
+my $old_lc_time = setlocale(LC_TIME);
+note "Old LC_TIME: $old_lc_time";
+note "Set LC_TIME to: ".setlocale(LC_TIME, 'C');
+my $reminder = strftime("REM %d %b %Y AT %H:%M MSG %%\"It's Time%%\" %%1%%", localtime(time));
+note "Setting reminder: $reminder";
+$TEST_REMINDERS->printflush("$reminder\n");
+note "Set LC_TIME to: ".setlocale(LC_TIME, $old_lc_time);
 
 ok my $rc = Remind::Client::Test001->new(filename => $TEST_REMINDERS->filename()),
     'Made a new Remind::Client::Test001 object';
 isa_ok $rc, 'Remind::Client::Test001';
 isa_ok $rc, 'Remind::Client';
 
-note 'Setting 90 second alarm';
+note 'Setting 15 second alarm';
 local $SIG{ALRM} = sub { die "Took too long to receive a reminder"; };
-alarm 90;
+alarm 15;
 note 'Running $rc->run()';
-diag "Please be patient, this test can take up to 90 seconds to complete.";
 $rc->run();
 
