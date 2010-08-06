@@ -32,7 +32,7 @@ remind. It
 
 =cut
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 $VERSION = eval $VERSION;
 
 use Carp;
@@ -40,7 +40,7 @@ use File::HomeDir;
 use IO::Handle;
 use IPC::Open2;
 
-our $DEBUG = 0;
+use constant DEBUG => 0;
 
 my $REMIND = 'remind';
 my @REMIND_SERVER_ARGS = qw(-z0);
@@ -113,10 +113,10 @@ sub _loop {
 
     while (defined(my $line = $self->{child_out}->getline())) {
         chomp $line;
-        if (my ($due_time, $reminder_time, $tag) = $line =~ /^NOTE reminder (\S+) (\S+) (\S{0,48})$/) {
+        if (my ($due_time, $reminder_time, $tag) = $line =~ /^NOTE\s+reminder\s+(\S+)\s+(\S+)\s+(\S{0,48})$/) {
             my $msg;
             while(defined(my $line = $self->{child_out}->getline())) {
-                if ($line =~ /^NOTE endreminder$/) {
+                if ($line =~ /^NOTE\s+endreminder$/) {
                     last;
                 }
                 $msg .= $line;
@@ -124,13 +124,13 @@ sub _loop {
             chomp $msg;
             $self->_debug("Got a new reminder: $msg, due at $due_time, reminded at $reminder_time, with tag $tag");
             $self->reminder(message => $msg, due_time => $due_time, reminder_time => $reminder_time, tag => $tag);
-        } elsif ($line =~ /^NOTE newdate$/) {
+        } elsif ($line =~ /^NOTE\s+newdate$/) {
             $self->_debug("It's a new day.");
             $self->newdate();
-        } elsif ($line =~ /^NOTE reread$/) {
+        } elsif ($line =~ /^NOTE\s+reread$/) {
             $self->_debug("Config was reread.");
             $self->reread();
-        } elsif ($line =~ /^NOTE queued (\d+)$/) {
+        } elsif ($line =~ /^NOTE\s+queued\s+(\d+)$/) {
             $self->_debug("Got queued count: $1");
             $self->queued(count => $1);
         } else {
@@ -201,7 +201,7 @@ is to issue a 'STATUS' command in response to this.
 
 This receives no parameters.
 
-The default implementation.
+The default implementation does nothing.
 
 =cut
 
@@ -255,6 +255,8 @@ reread() event being fired.
 sub send {
     my ($self, %args) = @_;
 
+    defined $args{command}
+        or return $self->_error("Missing required argument 'command'");
     $args{command} = uc $args{command};
     $args{command} =~ /^(EXIT|STATUS|REREAD)$/
         or return $self->_error("Invalid command: $args{command}");
@@ -291,7 +293,7 @@ sub sigHUP {
 
 # debug messages, for development
 sub _debug {
-    return unless $DEBUG;
+    return unless DEBUG;
 
     my ($self, @msg) = @_;
 
